@@ -8,9 +8,23 @@ $('body').on('keydown', (event) => {
 });
 
 $('#direction').on('click', function(event) {
-  var a = ['up', 'down', 'left', 'right'];
-  var randomDirection = a[Math.floor(a.length * Math.random())];
-  SwimTeam.move(randomDirection);
-})
+  const serverURL = 'http://127.0.0.1:3000';
+  $.ajax({
+    url: serverURL,
+    type: 'GET',
+    contentType: 'application/json',
+    success: function(data) {
+      console.log(typeof data);
+      data = JSON.parse(data);
+      SwimTeam.move(data);
+    },
+    error: function() {
+      console.log('Failed');
+    }
+
+  });
+});
+
+
 
 console.log('Client is running in the browser!');
